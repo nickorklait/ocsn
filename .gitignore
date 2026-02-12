@@ -1,0 +1,17 @@
+# dependencies
+node_modules/
+
+# Expo local artifacts
+.expo/
+.expo-shared/
+
+# Native build outputs
+ios/
+android/
+
+# Ignore binary image assets in this repo/PR
+assets/**/*.png
+
+# macOS / editor
+.DS_Store
+.vscode/
