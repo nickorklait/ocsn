@@ -12,6 +12,15 @@ android/
 # Ignore binary image assets in this repo/PR
 assets/**/*.png
 
+# Re-include required Expo assets (and their folder path)
+!assets/stratos/
+!assets/icon.png
+!assets/favicon.png
+!assets/splash.png
+!assets/adaptive-icon.png
+!assets/stratos/stratos-cow.png
+
+
 # macOS / editor
 .DS_Store
 .vscode/
