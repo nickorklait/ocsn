@@ -16,6 +16,7 @@
     ],
     "ios": {
       "supportsTablet": true,
+      "buildNumber": "1",
       "bundleIdentifier": "com.nickorklait.stratos",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
