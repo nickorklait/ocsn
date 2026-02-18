@@ -1,6 +1,7 @@
 # Stratos (Expo iOS starter)
 
 Minimal Expo-managed React Native app that renders a centered Stratos logo on a deep brand background.
+It now includes a simple top header with a modal menu for Home, About, and Contact screens.
 
 ## Requirements
 
