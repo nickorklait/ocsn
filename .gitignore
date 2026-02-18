@@ -24,3 +24,4 @@ assets/**/*.png
 # macOS / editor
 .DS_Store
 .vscode/
+assets/PIM/

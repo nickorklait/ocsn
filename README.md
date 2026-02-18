@@ -1,7 +1,26 @@
 # Stratos (Expo iOS starter)
 
 Minimal Expo-managed React Native app that renders a centered Stratos logo on a deep brand background.
-It now includes a simple top header with a modal menu for Home, About, and Contact screens.
+It now includes a simple top header with a modal menu for Home, About, Contact, and Products screens.
+
+## Products XML input
+
+Place your product export XML at:
+
+`/assets/PIM/OCSN_Website_Export_Orion_Nidar.xml`
+
+This XML is bundled into the app build. To update product data for TestFlight/production,
+replace this file and create a new build.
+
+The app reads repeated `<Product>` nodes and shows products where:
+- `ActiveProduct` is `Yes` (case-insensitive)
+- `ProductName` contains `Stratos` (case-insensitive)
+
+Product cards use:
+- `ProductImageURL` for image
+- `ProductNameWeb` (or `ProductName` fallback) for title
+- `ProductDescription`
+- `IngredientList` (HTML entities decoded, tags stripped)
 
 ## Requirements
 
