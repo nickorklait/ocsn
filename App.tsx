@@ -10,12 +10,16 @@ import {
 import { HomeScreen } from './src/screens/HomeScreen';
 import { AboutScreen } from './src/screens/AboutScreen';
 import { ContactScreen } from './src/screens/ContactScreen';
+import { ProductsScreen } from './src/screens/ProductsScreen';
+import { ProductDetailsScreen } from './src/screens/ProductDetailsScreen';
+import { Product } from './src/data/products/types';
 import { colors } from './src/theme/colors';
 
-type Screen = 'home' | 'about' | 'contact';
+type Screen = 'home' | 'about' | 'contact' | 'products' | 'productDetails';
 
 export default function App() {
   const [activeScreen, setActiveScreen] = useState<Screen>('home');
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [menuVisible, setMenuVisible] = useState(false);
 
   const closeMenu = () => setMenuVisible(false);
@@ -41,8 +45,16 @@ export default function App() {
   }, [menuVisible]);
 
   const selectScreen = (screen: Screen) => {
+    if (screen !== 'productDetails') {
+      setSelectedProduct(null);
+    }
     setActiveScreen(screen);
     closeMenu();
+  };
+
+  const openProduct = (product: Product) => {
+    setSelectedProduct(product);
+    setActiveScreen('productDetails');
   };
 
   const renderScreen = () => {
@@ -52,6 +64,19 @@ export default function App() {
 
     if (activeScreen === 'contact') {
       return <ContactScreen />;
+    }
+
+    if (activeScreen === 'products') {
+      return <ProductsScreen onSelectProduct={openProduct} />;
+    }
+
+    if (activeScreen === 'productDetails' && selectedProduct) {
+      return (
+        <ProductDetailsScreen
+          product={selectedProduct}
+          onBack={() => setActiveScreen('products')}
+        />
+      );
     }
 
     return <HomeScreen />;
@@ -84,6 +109,9 @@ export default function App() {
             </Pressable>
             <Pressable style={styles.menuItem} onPress={() => selectScreen('contact')}>
               <Text style={styles.menuItemText}>Contact</Text>
+            </Pressable>
+            <Pressable style={styles.menuItem} onPress={() => selectScreen('products')}>
+              <Text style={styles.menuItemText}>Products</Text>
             </Pressable>
           </Pressable>
         </Pressable>
