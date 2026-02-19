@@ -25,3 +25,5 @@ assets/**/*.png
 .DS_Store
 .vscode/
 assets/PIM/
+!assets/PIM/
+!assets/PIM/OCSN_Website_Export_Orion_Nidar.xml
