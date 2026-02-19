@@ -1,5 +1,12 @@
 import React from 'react';
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import {
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+  useWindowDimensions,
+} from 'react-native';
 import { Product } from '../data/products/types';
 import { colors } from '../theme/colors';
 
@@ -9,12 +16,19 @@ interface ProductCardProps {
 }
 
 export const ProductCard = ({ product, onPress }: ProductCardProps) => {
+  const { width } = useWindowDimensions();
+  const imageHeight = Math.min(160, Math.max(110, Math.round((width - 32) * 0.42)));
+
   return (
     <Pressable style={styles.card} onPress={() => onPress(product)}>
       {product.imageUrl ? (
-        <Image source={{ uri: product.imageUrl }} style={styles.image} resizeMode="contain" />
+        <Image
+          source={{ uri: product.imageUrl }}
+          style={[styles.image, { height: imageHeight }]}
+          resizeMode="contain"
+        />
       ) : (
-        <View style={[styles.image, styles.imagePlaceholder]}>
+        <View style={[styles.image, styles.imagePlaceholder, { height: imageHeight }]}>
           <Text style={styles.placeholderText}>No Image</Text>
         </View>
       )}
@@ -43,7 +57,6 @@ const styles = StyleSheet.create({
   },
   image: {
     width: '100%',
-    height: 170,
     backgroundColor: 'rgba(255, 255, 255, 0.04)',
   },
   imagePlaceholder: {

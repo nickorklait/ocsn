@@ -1,5 +1,13 @@
 import React from 'react';
-import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import {
+  Image,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  useWindowDimensions,
+} from 'react-native';
 import { Product } from '../data/products/types';
 import { colors } from '../theme/colors';
 
@@ -9,6 +17,9 @@ interface ProductDetailsScreenProps {
 }
 
 export const ProductDetailsScreen = ({ product, onBack }: ProductDetailsScreenProps) => {
+  const { width } = useWindowDimensions();
+  const imageHeight = Math.min(200, Math.max(130, Math.round((width - 32) * 0.56)));
+
   return (
     <ScrollView contentContainerStyle={styles.content}>
       <Pressable style={styles.backButton} onPress={onBack}>
@@ -16,9 +27,13 @@ export const ProductDetailsScreen = ({ product, onBack }: ProductDetailsScreenPr
       </Pressable>
 
       {product.imageUrl ? (
-        <Image source={{ uri: product.imageUrl }} style={styles.image} resizeMode="contain" />
+        <Image
+          source={{ uri: product.imageUrl }}
+          style={[styles.image, { height: imageHeight }]}
+          resizeMode="contain"
+        />
       ) : (
-        <View style={[styles.image, styles.imagePlaceholder]}>
+        <View style={[styles.image, styles.imagePlaceholder, { height: imageHeight }]}>
           <Text style={styles.placeholderText}>No Image</Text>
         </View>
       )}
@@ -52,7 +67,6 @@ const styles = StyleSheet.create({
   },
   image: {
     width: '100%',
-    height: 220,
     borderRadius: 12,
     marginBottom: 14,
     backgroundColor: 'rgba(255, 255, 255, 0.04)',

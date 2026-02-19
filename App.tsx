@@ -131,8 +131,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    backgroundColor: colors.brandBackground,
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(233, 238, 255, 0.2)',
+    zIndex: 20,
+    elevation: 20,
   },
   title: {
     color: colors.brandText,
