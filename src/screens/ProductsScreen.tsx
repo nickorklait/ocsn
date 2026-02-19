@@ -13,7 +13,7 @@ import { Product } from '../data/products/types';
 import { colors } from '../theme/colors';
 
 interface ProductsScreenProps {
-  onSelectProduct: (product: Product) => void;
+  onSelectProduct?: (product: Product) => void;
 }
 
 export const ProductsScreen = ({ onSelectProduct }: ProductsScreenProps) => {
@@ -65,7 +65,7 @@ export const ProductsScreen = ({ onSelectProduct }: ProductsScreenProps) => {
       keyExtractor={(item) => item.id}
       contentContainerStyle={styles.listContent}
       renderItem={({ item }) => (
-        <ProductCard product={item} onPress={onSelectProduct} />
+        <ProductCard product={item} onPress={onSelectProduct || (() => undefined)} />
       )}
       ListEmptyComponent={
         <Text style={styles.stateText}>No active Stratos products found.</Text>
