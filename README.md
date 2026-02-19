@@ -1,7 +1,15 @@
 # Stratos (Expo iOS starter)
 
 Minimal Expo-managed React Native app that renders a centered Stratos logo on a deep brand background.
-It now includes a simple top header with a modal menu for Home, About, Contact, and Products screens.
+Navigation now uses bottom tabs for Home, Products, About, and Contact, plus a lightweight
+drawer entry for Seasonal Campaigns (opened via the "More" button in the header).
+
+Edit screen content in:
+- `src/screens/HomeScreen.tsx`
+- `src/screens/ProductsScreen.tsx`
+- `src/screens/AboutScreen.tsx`
+- `src/screens/ContactScreen.tsx`
+- `src/screens/SeasonalCampaignsScreen.tsx`
 
 ## Products XML input
 
