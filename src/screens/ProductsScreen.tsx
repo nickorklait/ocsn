@@ -7,16 +7,16 @@ import {
   Text,
   View,
 } from 'react-native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { ProductCard } from '../components/ProductCard';
 import { loadProducts } from '../data/products/xmlProducts';
 import { Product } from '../data/products/types';
+import { ProductsStackParamList } from '../navigation/routes';
 import { colors } from '../theme/colors';
 
-interface ProductsScreenProps {
-  onSelectProduct?: (product: Product) => void;
-}
+type ProductsScreenProps = NativeStackScreenProps<ProductsStackParamList, 'Products'>;
 
-export const ProductsScreen = ({ onSelectProduct }: ProductsScreenProps) => {
+export const ProductsScreen = ({ navigation }: ProductsScreenProps) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -63,9 +63,13 @@ export const ProductsScreen = ({ onSelectProduct }: ProductsScreenProps) => {
     <FlatList
       data={products}
       keyExtractor={(item) => item.id}
+      style={styles.list}
       contentContainerStyle={styles.listContent}
       renderItem={({ item }) => (
-        <ProductCard product={item} onPress={onSelectProduct || (() => undefined)} />
+        <ProductCard
+          product={item}
+          onPress={(product) => navigation.navigate('ProductDetails', { product })}
+        />
       )}
       ListEmptyComponent={
         <Text style={styles.stateText}>No active Stratos products found.</Text>
@@ -80,6 +84,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 24,
+    backgroundColor: colors.brandBackground,
+  },
+  list: {
+    backgroundColor: colors.brandBackground,
   },
   stateText: {
     marginTop: 12,

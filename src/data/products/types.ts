@@ -3,6 +3,7 @@ export interface Product {
   name: string;
   description: string;
   ingredients: string;
+  masterErpNumber?: string;
   imageUrl?: string;
 }
 

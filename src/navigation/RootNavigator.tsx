@@ -1,21 +1,36 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { DrawerActions } from '@react-navigation/native';
 import { StyleSheet, Text, View, Pressable } from 'react-native';
-import { routes, RootTabParamList, RootDrawerParamList, TabRouteName } from './routes';
+import {
+  routes,
+  RootTabParamList,
+  RootDrawerParamList,
+  TabRouteName,
+  ProductsStackParamList,
+  RecipesStackParamList,
+} from './routes';
 import { HomeScreen } from '../screens/HomeScreen';
 import { ProductsScreen } from '../screens/ProductsScreen';
 import { AboutScreen } from '../screens/AboutScreen';
 import { ContactScreen } from '../screens/ContactScreen';
 import { SeasonalCampaignsScreen } from '../screens/SeasonalCampaignsScreen';
+import { RecipesScreen } from '../screens/RecipesScreen';
+import { RecipeDetailsScreen } from '../screens/RecipeDetailsScreen';
+import { ProductDetailsScreen } from '../screens/ProductDetailsScreen';
 import { colors } from '../theme/colors';
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
 const Drawer = createDrawerNavigator<RootDrawerParamList>();
+const ProductsStack = createNativeStackNavigator<ProductsStackParamList>();
+const RecipesStack = createNativeStackNavigator<RecipesStackParamList>();
 
 const tabIconLabel: Record<TabRouteName, string> = {
   [routes.Home]: 'H',
   [routes.Products]: 'P',
+  [routes.Recipes]: 'R',
   [routes.About]: 'A',
   [routes.Contact]: 'C',
 };
@@ -27,6 +42,21 @@ const TabIcon = ({ focused, label }: { focused: boolean; label: string }) => {
     </View>
   );
 };
+
+const ProductsStackNavigator = () => (
+  <ProductsStack.Navigator screenOptions={{ headerShown: false }}>
+    <ProductsStack.Screen name="Products" component={ProductsScreen} />
+    <ProductsStack.Screen name="ProductDetails" component={ProductDetailsScreen} />
+  </ProductsStack.Navigator>
+);
+
+const RecipesStackNavigator = () => (
+  <RecipesStack.Navigator screenOptions={{ headerShown: false }}>
+    <RecipesStack.Screen name="Recipes" component={RecipesScreen} />
+    <RecipesStack.Screen name="RecipeDetails" component={RecipeDetailsScreen} />
+    <RecipesStack.Screen name="ProductDetails" component={ProductDetailsScreen} />
+  </RecipesStack.Navigator>
+);
 
 const TabNavigator = () => {
   return (
@@ -44,7 +74,7 @@ const TabNavigator = () => {
         headerRight: ({ tintColor }) => (
           <Pressable
             style={styles.headerRight}
-            onPress={() => navigation.getParent()?.openDrawer()}
+            onPress={() => navigation.getParent()?.dispatch(DrawerActions.openDrawer())}
           >
             <Text style={[styles.headerRightText, { color: tintColor || colors.brandText }]}>
               More
@@ -57,7 +87,8 @@ const TabNavigator = () => {
       })}
     >
       <Tab.Screen name={routes.Home} component={HomeScreen} />
-      <Tab.Screen name={routes.Products} component={ProductsScreen} />
+      <Tab.Screen name={routes.Products} component={ProductsStackNavigator} />
+      <Tab.Screen name={routes.Recipes} component={RecipesStackNavigator} />
       <Tab.Screen name={routes.About} component={AboutScreen} />
       <Tab.Screen name={routes.Contact} component={ContactScreen} />
     </Tab.Navigator>
