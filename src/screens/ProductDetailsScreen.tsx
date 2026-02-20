@@ -8,21 +8,23 @@ import {
   View,
   useWindowDimensions,
 } from 'react-native';
-import { Product } from '../data/products/types';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { ProductDetailsParams } from '../navigation/routes';
 import { colors } from '../theme/colors';
 
-interface ProductDetailsScreenProps {
-  product: Product;
-  onBack: () => void;
-}
+type ProductDetailsProps = NativeStackScreenProps<
+  { ProductDetails: ProductDetailsParams },
+  'ProductDetails'
+>;
 
-export const ProductDetailsScreen = ({ product, onBack }: ProductDetailsScreenProps) => {
+export const ProductDetailsScreen = ({ route, navigation }: ProductDetailsProps) => {
+  const { product } = route.params;
   const { width } = useWindowDimensions();
   const imageHeight = Math.min(200, Math.max(130, Math.round((width - 32) * 0.56)));
 
   return (
     <ScrollView contentContainerStyle={styles.content}>
-      <Pressable style={styles.backButton} onPress={onBack}>
+      <Pressable style={styles.backButton} onPress={() => navigation.goBack()}>
         <Text style={styles.backButtonText}>Back to Products</Text>
       </Pressable>
 
@@ -52,6 +54,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 14,
     paddingBottom: 30,
+    backgroundColor: colors.brandBackground,
   },
   backButton: {
     alignSelf: 'flex-start',

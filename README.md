@@ -10,6 +10,16 @@ Edit screen content in:
 - `src/screens/AboutScreen.tsx`
 - `src/screens/ContactScreen.tsx`
 - `src/screens/SeasonalCampaignsScreen.tsx`
+- `src/screens/RecipesScreen.tsx`
+- `src/screens/RecipeDetailsScreen.tsx`
+
+## Recipes
+
+Recipe data lives in:
+- `src/data/recipes/recipes.ts`
+
+Edit or add recipes by updating the seed data. Each recipe lists `productRefs`,
+which are matched against products by `MasterERPNumber` or name contains.
 
 ## Products XML input
 

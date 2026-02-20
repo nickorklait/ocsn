@@ -37,6 +37,7 @@ const parseProductsFromXml = (xml: string): Product[] => {
     const productDescription = getTagValue(block, 'ProductDescription');
     const ingredientList = getTagValue(block, 'IngredientList');
     const productImageURL = getTagValue(block, 'ProductImageURL');
+    const masterErpNumber = getTagValue(block, 'MasterERPNumber');
 
     if ((activeProduct || '').trim().toLowerCase() !== 'yes') {
       return;
@@ -56,6 +57,10 @@ const parseProductsFromXml = (xml: string): Product[] => {
       description: description || 'No description available.',
       ingredients: ingredients || 'Ingredients unavailable.',
     };
+
+    if (masterErpNumber) {
+      product.masterErpNumber = cleanPlainText(masterErpNumber);
+    }
 
     if (imageUrl) {
       product.imageUrl = imageUrl;
