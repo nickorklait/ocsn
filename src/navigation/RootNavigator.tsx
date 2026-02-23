@@ -11,6 +11,7 @@ import {
   TabRouteName,
   ProductsStackParamList,
   RecipesStackParamList,
+  UgcStackParamList,
 } from './routes';
 import { HomeScreen } from '../screens/HomeScreen';
 import { ProductsScreen } from '../screens/ProductsScreen';
@@ -20,12 +21,15 @@ import { SeasonalCampaignsScreen } from '../screens/SeasonalCampaignsScreen';
 import { RecipesScreen } from '../screens/RecipesScreen';
 import { RecipeDetailsScreen } from '../screens/RecipeDetailsScreen';
 import { ProductDetailsScreen } from '../screens/ProductDetailsScreen';
+import { UgcGalleryScreen } from '../screens/UgcGalleryScreen';
+import { UgcPostScreen } from '../screens/UgcPostScreen';
 import { colors } from '../theme/colors';
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
 const Drawer = createDrawerNavigator<RootDrawerParamList>();
 const ProductsStack = createNativeStackNavigator<ProductsStackParamList>();
 const RecipesStack = createNativeStackNavigator<RecipesStackParamList>();
+const UgcStack = createNativeStackNavigator<UgcStackParamList>();
 
 const tabIconLabel: Record<TabRouteName, string> = {
   [routes.Home]: 'H',
@@ -56,6 +60,13 @@ const RecipesStackNavigator = () => (
     <RecipesStack.Screen name="RecipeDetails" component={RecipeDetailsScreen} />
     <RecipesStack.Screen name="ProductDetails" component={ProductDetailsScreen} />
   </RecipesStack.Navigator>
+);
+
+const UgcStackNavigator = () => (
+  <UgcStack.Navigator screenOptions={{ headerShown: false }}>
+    <UgcStack.Screen name="UgcGallery" component={UgcGalleryScreen} />
+    <UgcStack.Screen name="UgcPost" component={UgcPostScreen} />
+  </UgcStack.Navigator>
 );
 
 const TabNavigator = () => {
@@ -112,6 +123,11 @@ export const RootNavigator = () => {
         options={{ title: 'Main' }}
       />
       <Drawer.Screen name={routes.SeasonalCampaigns} component={SeasonalCampaignsScreen} />
+      <Drawer.Screen
+        name={routes.UgcGallery}
+        component={UgcStackNavigator}
+        options={{ title: 'Share a Smile, Join the Herd' }}
+      />
     </Drawer.Navigator>
   );
 };

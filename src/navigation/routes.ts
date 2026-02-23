@@ -9,6 +9,7 @@ export const tabRoutes = {
 export const drawerRoutes = {
   Tabs: 'Tabs',
   SeasonalCampaigns: 'Seasonal Campaigns',
+  UgcGallery: 'Share a Smile, Join the Herd',
 } as const;
 
 export const routes = {
@@ -29,6 +30,7 @@ export type RootTabParamList = {
 export type RootDrawerParamList = {
   [routes.Tabs]: undefined;
   [routes.SeasonalCampaigns]: undefined;
+  [routes.UgcGallery]: undefined;
 };
 
 export type ProductDetailsParams = {
@@ -44,4 +46,9 @@ export type RecipesStackParamList = {
   Recipes: undefined;
   RecipeDetails: { recipeId: string };
   ProductDetails: ProductDetailsParams;
+};
+
+export type UgcStackParamList = {
+  UgcGallery: undefined;
+  UgcPost: { postId: string };
 };

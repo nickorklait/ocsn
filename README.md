@@ -21,6 +21,14 @@ Recipe data lives in:
 Edit or add recipes by updating the seed data. Each recipe lists `productRefs`,
 which are matched against products by `MasterERPNumber` or name contains.
 
+## UGC Gallery
+
+Curated UGC posts live in:
+- `src/data/ugc/curatedPosts.ts`
+
+To add or remove posts, edit the curated list. This MVP is curated-only and does
+not accept user uploads.
+
 ## Products XML input
 
 Place your product export XML at:
