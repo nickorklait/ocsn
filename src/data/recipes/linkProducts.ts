@@ -9,10 +9,13 @@ const normalizeText = (value: string) =>
     .replace(/\s+/g, ' ')
     .trim();
 
-const tokenize = (value: string) =>
-  normalizeText(value)
+const tokenize = (value: string) => {
+  const rawTokens = normalizeText(value)
     .split(' ')
-    .filter((token) => token.length > 1 && token !== 'stratos');
+    .filter((token) => token.length > 1);
+  const filtered = rawTokens.filter((token) => token !== 'stratos');
+  return filtered.length > 0 ? filtered : rawTokens;
+};
 
 const containsAllTokens = (haystack: string, needle: string) => {
   const hay = normalizeText(haystack);
