@@ -29,6 +29,11 @@ Curated UGC posts live in:
 To add or remove posts, edit the curated list. This MVP is curated-only and does
 not accept user uploads.
 
+## Crash diagnostics
+
+The app now writes the last JS error to AsyncStorage and shows a fallback UI if a
+render error occurs. This is used to debug TestFlight crashes safely.
+
 ## Products XML input
 
 Place your product export XML at:

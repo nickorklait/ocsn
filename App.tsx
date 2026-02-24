@@ -1,10 +1,16 @@
 import 'react-native-gesture-handler';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NavigationContainer, Theme } from '@react-navigation/native';
 import { RootNavigator } from './src/navigation/RootNavigator';
 import { colors } from './src/theme/colors';
+import { ErrorBoundary } from './src/components/ErrorBoundary';
+import { initGlobalErrorHandlers } from './src/utils/errorReporting';
 
 export default function App() {
+  useEffect(() => {
+    initGlobalErrorHandlers();
+  }, []);
+
   const navigationTheme: Theme = {
     dark: true,
     colors: {
@@ -24,8 +30,10 @@ export default function App() {
   };
 
   return (
-    <NavigationContainer theme={navigationTheme}>
-      <RootNavigator />
-    </NavigationContainer>
+    <ErrorBoundary>
+      <NavigationContainer theme={navigationTheme}>
+        <RootNavigator />
+      </NavigationContainer>
+    </ErrorBoundary>
   );
 }
