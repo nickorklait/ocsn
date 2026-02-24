@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { ProductCard } from '../components/ProductCard';
-import { loadProducts } from '../data/products/xmlProducts';
+import { getProductsDiagnostics, loadProducts } from '../data/products/xmlProducts';
 import { Product } from '../data/products/types';
 import { ProductsStackParamList } from '../navigation/routes';
 import { colors } from '../theme/colors';
@@ -20,6 +20,7 @@ export const ProductsScreen = ({ navigation }: ProductsScreenProps) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [diagnostics, setDiagnostics] = useState(getProductsDiagnostics());
 
   const fetchProducts = useCallback(async () => {
     setIsLoading(true);
@@ -28,8 +29,10 @@ export const ProductsScreen = ({ navigation }: ProductsScreenProps) => {
     try {
       const parsedProducts = await loadProducts();
       setProducts(parsedProducts);
+      setDiagnostics(getProductsDiagnostics());
     } catch (error) {
       setErrorMessage('Could not load products.');
+      setDiagnostics(getProductsDiagnostics());
     } finally {
       setIsLoading(false);
     }
@@ -52,6 +55,9 @@ export const ProductsScreen = ({ navigation }: ProductsScreenProps) => {
     return (
       <View style={styles.centeredState}>
         <Text style={styles.stateText}>{errorMessage}</Text>
+        {diagnostics.lastError ? (
+          <Text style={styles.errorDetail}>{diagnostics.lastError}</Text>
+        ) : null}
         <Pressable style={styles.retryButton} onPress={fetchProducts}>
           <Text style={styles.retryButtonText}>Retry</Text>
         </Pressable>
@@ -72,7 +78,11 @@ export const ProductsScreen = ({ navigation }: ProductsScreenProps) => {
         />
       )}
       ListEmptyComponent={
-        <Text style={styles.stateText}>No active Stratos products found.</Text>
+        <Text style={styles.stateText}>
+          {diagnostics.lastError
+            ? 'Products unavailable right now.'
+            : 'No active Stratos products found.'}
+        </Text>
       }
     />
   );
@@ -93,6 +103,13 @@ const styles = StyleSheet.create({
     marginTop: 12,
     color: colors.brandText,
     fontSize: 16,
+    textAlign: 'center',
+  },
+  errorDetail: {
+    marginTop: 8,
+    color: colors.brandText,
+    fontSize: 12,
+    opacity: 0.7,
     textAlign: 'center',
   },
   retryButton: {

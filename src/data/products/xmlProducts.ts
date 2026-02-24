@@ -1,11 +1,19 @@
 import { Asset } from 'expo-asset';
+import * as FileSystem from 'expo-file-system';
 import { chooseDisplayName, cleanPlainText } from './normalize';
 import { Product } from './types';
+import { reportError } from '../../utils/errorReporting';
 
 const XML_ASSET = require('../../../assets/PIM/OCSN_Website_Export_Orion_Nidar.xml');
 
 let productsCache: Product[] | null = null;
 let inFlightLoad: Promise<Product[]> | null = null;
+let lastDiagnostics: {
+  xmlUri?: string;
+  xmlLength?: number;
+  parsedCount?: number;
+  lastError?: string;
+} = {};
 
 const unwrapCdata = (value: string): string => {
   const cdataMatch = value.match(/^<!\[CDATA\[([\s\S]*?)\]\]>$/);
@@ -84,21 +92,46 @@ const resolveBundledXmlUri = async (): Promise<string> => {
   return uri;
 };
 
+const fetchWithTimeout = async (uri: string, timeoutMs: number) => {
+  return Promise.race([
+    fetch(uri),
+    new Promise<Response>((_, reject) =>
+      setTimeout(() => reject(new Error('XML load timeout.')), timeoutMs)
+    ),
+  ]);
+};
+
 const loadXmlText = async (): Promise<string> => {
   const uri = await resolveBundledXmlUri();
+  lastDiagnostics = { ...lastDiagnostics, xmlUri: uri, lastError: undefined };
 
-  const response = await fetch(uri);
+  if (uri.startsWith('file://')) {
+    try {
+      const text = await FileSystem.readAsStringAsync(uri);
+      lastDiagnostics = { ...lastDiagnostics, xmlLength: text.length };
+      return text;
+    } catch (error) {
+      reportError(error, 'xmlProducts.readAsStringAsync');
+    }
+  }
+
+  const response = await fetchWithTimeout(uri, 8000);
   if (!response.ok) {
     throw new Error('Unable to read XML asset.');
   }
 
-  return response.text();
+  const text = await response.text();
+  lastDiagnostics = { ...lastDiagnostics, xmlLength: text.length };
+  return text;
 };
 
 export const clearProductsCache = () => {
   productsCache = null;
   inFlightLoad = null;
+  lastDiagnostics = {};
 };
+
+export const getProductsDiagnostics = () => lastDiagnostics;
 
 export const loadProducts = async (): Promise<Product[]> => {
   if (productsCache) {
@@ -110,10 +143,19 @@ export const loadProducts = async (): Promise<Product[]> => {
   }
 
   inFlightLoad = (async () => {
-    const xml = await loadXmlText();
-    const parsedProducts = parseProductsFromXml(xml);
-    productsCache = parsedProducts;
-    return parsedProducts;
+    try {
+      const xml = await loadXmlText();
+      const parsedProducts = parseProductsFromXml(xml);
+      productsCache = parsedProducts;
+      lastDiagnostics = { ...lastDiagnostics, parsedCount: parsedProducts.length };
+      return parsedProducts;
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : 'Unknown product load error.';
+      lastDiagnostics = { ...lastDiagnostics, lastError: message };
+      reportError(error, 'xmlProducts.loadProducts');
+      return [];
+    }
   })();
 
   try {
