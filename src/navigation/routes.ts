@@ -10,6 +10,7 @@ export const drawerRoutes = {
   Tabs: 'Tabs',
   SeasonalCampaigns: 'Seasonal Campaigns',
   UgcGallery: 'Share a Smile, Join the Herd',
+  BarcodeScan: 'Scan a barcode',
 } as const;
 
 export const routes = {
@@ -31,6 +32,7 @@ export type RootDrawerParamList = {
   [routes.Tabs]: undefined;
   [routes.SeasonalCampaigns]: undefined;
   [routes.UgcGallery]: undefined;
+  [routes.BarcodeScan]: undefined;
 };
 
 export type ProductDetailsParams = {

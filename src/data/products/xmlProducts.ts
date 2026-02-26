@@ -34,6 +34,15 @@ const getTagValue = (xmlBlock: string, tagName: string): string | undefined => {
   return unwrapCdata(match[1].trim());
 };
 
+const extractGtinFromUrl = (url?: string): string | undefined => {
+  if (!url) {
+    return undefined;
+  }
+
+  const match = url.match(/\/(\d{8,14})\//);
+  return match ? match[1] : undefined;
+};
+
 const parseProductsFromXml = (xml: string): Product[] => {
   const productBlocks = xml.match(/<Product\b[\s\S]*?<\/Product>/gi) || [];
   const results: Product[] = [];
@@ -59,6 +68,7 @@ const parseProductsFromXml = (xml: string): Product[] => {
     const description = cleanPlainText(productDescription);
     const ingredients = cleanPlainText(ingredientList);
     const imageUrl = cleanPlainText(productImageURL);
+    const gtin = extractGtinFromUrl(imageUrl);
     const product: Product = {
       id: `${name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${index}`,
       name,
@@ -68,6 +78,10 @@ const parseProductsFromXml = (xml: string): Product[] => {
 
     if (masterErpNumber) {
       product.masterErpNumber = cleanPlainText(masterErpNumber);
+    }
+
+    if (gtin) {
+      product.gtin = gtin;
     }
 
     if (imageUrl) {

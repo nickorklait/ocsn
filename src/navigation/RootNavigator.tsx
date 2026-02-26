@@ -23,6 +23,7 @@ import { RecipeDetailsScreen } from '../screens/RecipeDetailsScreen';
 import { ProductDetailsScreen } from '../screens/ProductDetailsScreen';
 import { UgcGalleryScreen } from '../screens/UgcGalleryScreen';
 import { UgcPostScreen } from '../screens/UgcPostScreen';
+import { BarcodeScanScreen } from '../screens/BarcodeScanScreen';
 import { colors } from '../theme/colors';
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
@@ -127,6 +128,11 @@ export const RootNavigator = () => {
         name={routes.UgcGallery}
         component={UgcStackNavigator}
         options={{ title: 'Share a Smile, Join the Herd' }}
+      />
+      <Drawer.Screen
+        name={routes.BarcodeScan}
+        component={BarcodeScanScreen}
+        options={{ title: 'Scan a barcode' }}
       />
     </Drawer.Navigator>
   );

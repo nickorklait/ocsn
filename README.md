@@ -29,6 +29,14 @@ Curated UGC posts live in:
 To add or remove posts, edit the curated list. This MVP is curated-only and does
 not accept user uploads.
 
+## Barcode scan
+
+Barcode scanning lives in:
+- `src/screens/BarcodeScanScreen.tsx`
+
+The scanner matches GTIN (from product image URLs) or `MasterERPNumber` to open the
+product detail screen.
+
 ## Crash diagnostics
 
 The app now writes the last JS error to AsyncStorage and shows a fallback UI if a

@@ -4,6 +4,7 @@ export interface Product {
   description: string;
   ingredients: string;
   masterErpNumber?: string;
+  gtin?: string;
   imageUrl?: string;
 }
 
