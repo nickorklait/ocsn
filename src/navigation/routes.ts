@@ -2,7 +2,6 @@ export const tabRoutes = {
   Home: 'Home',
   Products: 'Products',
   Recipes: 'Recipes',
-  About: 'About',
   Contact: 'Contact',
 } as const;
 
@@ -11,6 +10,7 @@ export const drawerRoutes = {
   SeasonalCampaigns: 'Seasonal Campaigns',
   UgcGallery: 'Share a Smile, Join the Herd',
   BarcodeScan: 'Scan a barcode',
+  About: 'About',
 } as const;
 
 export const routes = {
@@ -24,7 +24,6 @@ export type RootTabParamList = {
   [routes.Home]: undefined;
   [routes.Products]: undefined;
   [routes.Recipes]: undefined;
-  [routes.About]: undefined;
   [routes.Contact]: undefined;
 };
 
@@ -33,6 +32,7 @@ export type RootDrawerParamList = {
   [routes.SeasonalCampaigns]: undefined;
   [routes.UgcGallery]: undefined;
   [routes.BarcodeScan]: undefined;
+  [routes.About]: undefined;
 };
 
 export type ProductDetailsParams = {

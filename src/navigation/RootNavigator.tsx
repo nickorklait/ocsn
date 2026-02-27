@@ -36,7 +36,6 @@ const tabIconLabel: Record<TabRouteName, string> = {
   [routes.Home]: 'H',
   [routes.Products]: 'P',
   [routes.Recipes]: 'R',
-  [routes.About]: 'A',
   [routes.Contact]: 'C',
 };
 
@@ -101,7 +100,6 @@ const TabNavigator = () => {
       <Tab.Screen name={routes.Home} component={HomeScreen} />
       <Tab.Screen name={routes.Products} component={ProductsStackNavigator} />
       <Tab.Screen name={routes.Recipes} component={RecipesStackNavigator} />
-      <Tab.Screen name={routes.About} component={AboutScreen} />
       <Tab.Screen name={routes.Contact} component={ContactScreen} />
     </Tab.Navigator>
   );
@@ -134,6 +132,7 @@ export const RootNavigator = () => {
         component={BarcodeScanScreen}
         options={{ title: 'Scan a barcode' }}
       />
+      <Drawer.Screen name={routes.About} component={AboutScreen} />
     </Drawer.Navigator>
   );
 };
