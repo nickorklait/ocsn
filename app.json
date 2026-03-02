@@ -34,7 +34,12 @@
     },
     "plugins": [
       "expo-asset",
-      "expo-barcode-scanner"
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow Stratos to access your camera"
+        }
+      ]
     ],
     "extra": {
       "eas": {

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { BarCodeScanner } from 'expo-barcode-scanner';
+import { CameraView, useCameraPermissions } from 'expo-camera';
 import {
   ActivityIndicator,
   Pressable,
@@ -13,16 +13,20 @@ import { routes } from '../navigation/routes';
 import { colors } from '../theme/colors';
 
 export const BarcodeScanScreen = ({ navigation }: { navigation: any }) => {
-  const [hasPermission, setHasPermission] = useState<boolean | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [products, setProducts] = useState<Product[]>([]);
   const [scanResult, setScanResult] = useState<string | null>(null);
+  const [permission, requestPermission] = useCameraPermissions();
+  const hasPermission = permission?.granted ?? null;
 
   useEffect(() => {
-    BarCodeScanner.requestPermissionsAsync()
-      .then(({ status }) => setHasPermission(status === 'granted'))
-      .catch(() => setHasPermission(false));
-  }, []);
+    if (!permission) {
+      return;
+    }
+    if (!permission.granted) {
+      requestPermission().catch(() => undefined);
+    }
+  }, [permission, requestPermission]);
 
   useEffect(() => {
     let mounted = true;
@@ -101,7 +105,10 @@ export const BarcodeScanScreen = ({ navigation }: { navigation: any }) => {
         Point your camera at the barcode on the package. We’ll open the product.
       </Text>
       <View style={styles.scannerWrap}>
-        <BarCodeScanner onBarCodeScanned={handleScan} style={styles.scanner} />
+        <CameraView
+          onBarcodeScanned={scanResult ? undefined : handleScan}
+          style={styles.scanner}
+        />
       </View>
       {scanResult ? (
         <View style={styles.resultCard}>
