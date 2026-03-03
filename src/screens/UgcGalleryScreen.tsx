@@ -1,8 +1,10 @@
 import React, { useMemo, useState } from 'react';
 import {
   ActivityIndicator,
+  Platform,
   FlatList,
   Pressable,
+  SafeAreaView,
   StyleSheet,
   Text,
   View,
@@ -34,7 +36,8 @@ export const UgcGalleryScreen = ({ navigation }: ScreenProps) => {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.safeArea}>
+      <View style={styles.container}>
       <View style={styles.topBar}>
         <Pressable
           style={styles.topBarButton}
@@ -117,12 +120,17 @@ export const UgcGalleryScreen = ({ navigation }: ScreenProps) => {
           </View>
         </View>
       ) : null}
-    </View>
+      </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+    backgroundColor: colors.brandBackground,
+  },
+  safeArea: {
     flex: 1,
     backgroundColor: colors.brandBackground,
   },
@@ -135,7 +143,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 18,
-    paddingTop: 12,
+    paddingTop: Platform.select({ ios: 24, default: 12 }),
   },
   topBarButton: {
     paddingHorizontal: 12,

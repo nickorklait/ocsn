@@ -5,22 +5,34 @@ import { colors } from '../theme/colors';
 export const ContactScreen = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>Contact</Text>
-      <Text style={styles.body}>Questions, support requests, or partnership ideas:</Text>
+      <Text style={styles.heading}>Kontakt oss</Text>
 
-      <View style={styles.card}>
-        <Text style={styles.label}>Email</Text>
-        <Pressable onPress={() => Linking.openURL('mailto:hello@stratos.example')}>
-          <Text style={styles.link}>hello@stratos.example</Text>
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>Adresse til fabrikken</Text>
+        <Text style={styles.body}>Orkla Snacks, Nidar</Text>
+        <Text style={styles.body}>Postboks 2444 Torgard</Text>
+        <Text style={styles.body}>7005 Trondheim</Text>
+
+        <Text style={styles.label}>Besoksadresse</Text>
+        <Text style={styles.body}>Bromstadveien 2, Trondheim</Text>
+
+        <Text style={styles.label}>Tlf sentralbord</Text>
+        <Pressable onPress={() => Linking.openURL('tel:73583000')}>
+          <Text style={styles.link}>73583000</Text>
         </Pressable>
 
-        <Text style={styles.label}>Phone</Text>
-        <Pressable onPress={() => Linking.openURL('tel:+15550100425')}>
-          <Text style={styles.link}>+1 (555) 010-0425</Text>
-        </Pressable>
+        <Text style={styles.label}>Omvisning i fabrikken</Text>
+        <Text style={styles.body}>Ta kontakt via sentralbordet for tilgjengelige tider.</Text>
+      </View>
 
-        <Text style={styles.label}>Hours</Text>
-        <Text style={styles.value}>Mon-Fri, 9:00 AM-5:00 PM PT</Text>
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>Adresse til administrasjonen</Text>
+        <Text style={styles.body}>Orkla Snacks Norge</Text>
+        <Text style={styles.body}>Postboks 13 Skoyen</Text>
+        <Text style={styles.body}>0212 Oslo</Text>
+
+        <Text style={styles.label}>Besoksadresse</Text>
+        <Text style={styles.body}>Drammensveien 149, 0277 Oslo</Text>
       </View>
     </View>
   );
@@ -38,12 +50,26 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     marginBottom: 16,
   },
+  section: {
+    borderRadius: 14,
+    padding: 16,
+    borderWidth: 1,
+    borderColor: 'rgba(233, 238, 255, 0.2)',
+    backgroundColor: 'rgba(233, 238, 255, 0.08)',
+    marginBottom: 16,
+  },
+  sectionTitle: {
+    color: colors.brandText,
+    fontSize: 16,
+    fontWeight: '700',
+    marginBottom: 10,
+  },
   body: {
     color: colors.brandText,
     fontSize: 16,
     lineHeight: 24,
     opacity: 0.95,
-    marginBottom: 14,
+    marginBottom: 6,
   },
   card: {
     borderRadius: 14,
@@ -57,8 +83,8 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: '700',
     letterSpacing: 0.2,
-    marginTop: 8,
-    marginBottom: 4,
+    marginTop: 10,
+    marginBottom: 6,
     opacity: 0.9,
   },
   link: {

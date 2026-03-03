@@ -23,6 +23,7 @@ import { RecipeDetailsScreen } from '../screens/RecipeDetailsScreen';
 import { ProductDetailsScreen } from '../screens/ProductDetailsScreen';
 import { UgcGalleryScreen } from '../screens/UgcGalleryScreen';
 import { UgcPostScreen } from '../screens/UgcPostScreen';
+import { BarcodeScanScreen } from '../screens/BarcodeScanScreen';
 import { colors } from '../theme/colors';
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
@@ -35,7 +36,6 @@ const tabIconLabel: Record<TabRouteName, string> = {
   [routes.Home]: 'H',
   [routes.Products]: 'P',
   [routes.Recipes]: 'R',
-  [routes.About]: 'A',
   [routes.Contact]: 'C',
 };
 
@@ -100,7 +100,6 @@ const TabNavigator = () => {
       <Tab.Screen name={routes.Home} component={HomeScreen} />
       <Tab.Screen name={routes.Products} component={ProductsStackNavigator} />
       <Tab.Screen name={routes.Recipes} component={RecipesStackNavigator} />
-      <Tab.Screen name={routes.About} component={AboutScreen} />
       <Tab.Screen name={routes.Contact} component={ContactScreen} />
     </Tab.Navigator>
   );
@@ -128,6 +127,12 @@ export const RootNavigator = () => {
         component={UgcStackNavigator}
         options={{ title: 'Share a Smile, Join the Herd' }}
       />
+      <Drawer.Screen
+        name={routes.BarcodeScan}
+        component={BarcodeScanScreen}
+        options={{ title: 'Scan a barcode' }}
+      />
+      <Drawer.Screen name={routes.About} component={AboutScreen} />
     </Drawer.Navigator>
   );
 };
