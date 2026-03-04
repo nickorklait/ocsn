@@ -52,6 +52,19 @@ The puzzle uses a 3x3 grid with one empty tile and renders slices of
 To scale grid size in future, adjust `GRID_SIZE` in
 `src/games/slidingPuzzle/utils.ts`. The board and hook are size-driven.
 
+## Memory Game Mini Game
+
+Memory game files live in:
+- `src/games/memory/MemoryGameScreen.tsx`
+- `src/games/memory/MemoryBoard.tsx`
+- `src/games/memory/MemoryCard.tsx`
+- `src/games/memory/useMemoryGame.ts`
+- `src/games/memory/utils.ts`
+- `src/assets/stratosImages.ts`
+
+The game image map is defined in `src/assets/stratosImages.ts`. Add or remove
+entries there to control which local images are used for card pairs.
+
 ## Crash diagnostics
 
 The app now writes the last JS error to AsyncStorage and shows a fallback UI if a
