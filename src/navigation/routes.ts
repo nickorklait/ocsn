@@ -10,6 +10,8 @@ export const drawerRoutes = {
   SeasonalCampaigns: 'Seasonal Campaigns',
   UgcGallery: 'Share a Smile, Join the Herd',
   BarcodeScan: 'Scan a barcode',
+  FindStratoskua: 'Find Stratoskua',
+  SlidingPuzzle: 'Sliding Puzzle',
   About: 'About',
 } as const;
 
@@ -32,6 +34,8 @@ export type RootDrawerParamList = {
   [routes.SeasonalCampaigns]: undefined;
   [routes.UgcGallery]: undefined;
   [routes.BarcodeScan]: undefined;
+  [routes.FindStratoskua]: undefined;
+  [routes.SlidingPuzzle]: undefined;
   [routes.About]: undefined;
 };
 
