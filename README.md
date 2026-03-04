@@ -37,6 +37,21 @@ Barcode scanning lives in:
 The scanner matches GTIN (from product image URLs) or `MasterERPNumber` to open the
 product detail screen.
 
+## Sliding Puzzle Mini Game
+
+Sliding puzzle files live in:
+- `src/games/slidingPuzzle/SlidingPuzzleScreen.tsx`
+- `src/games/slidingPuzzle/SlidingPuzzleBoard.tsx`
+- `src/games/slidingPuzzle/Tile.tsx`
+- `src/games/slidingPuzzle/useSlidingPuzzle.ts`
+- `src/games/slidingPuzzle/utils.ts`
+
+The puzzle uses a 3x3 grid with one empty tile and renders slices of
+`assets/stratos/stratos-cow.png`.
+
+To scale grid size in future, adjust `GRID_SIZE` in
+`src/games/slidingPuzzle/utils.ts`. The board and hook are size-driven.
+
 ## Crash diagnostics
 
 The app now writes the last JS error to AsyncStorage and shows a fallback UI if a
