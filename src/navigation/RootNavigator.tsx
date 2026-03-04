@@ -26,6 +26,7 @@ import { UgcPostScreen } from '../screens/UgcPostScreen';
 import { BarcodeScanScreen } from '../screens/BarcodeScanScreen';
 import { FindStratoskua } from '../pages/FindStratoskua';
 import { SlidingPuzzleScreen } from '../games/slidingPuzzle/SlidingPuzzleScreen';
+import { FourInARowScreen } from '../games/fourInARow/FourInARowScreen';
 import { colors } from '../theme/colors';
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
@@ -140,6 +141,7 @@ export const RootNavigator = () => {
         options={{ title: 'Find Stratoskua' }}
       />
       <Drawer.Screen name={routes.SlidingPuzzle} component={SlidingPuzzleScreen} />
+      <Drawer.Screen name={routes.FourInARow} component={FourInARowScreen} />
       <Drawer.Screen name={routes.About} component={AboutScreen} />
     </Drawer.Navigator>
   );
