@@ -1,11 +1,14 @@
 import React from 'react';
+import { useNavigation } from '@react-navigation/native';
 import { Modal, Pressable, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { colors } from '../../theme/colors';
+import { routes } from '../../navigation/routes';
 import { MemoryBoard } from './MemoryBoard';
 import { DEFAULT_PAIRS, formatTime, HARD_PAIRS } from './utils';
 import { useMemoryGame } from './useMemoryGame';
 
 export const MemoryGameScreen = () => {
+  const navigation = useNavigation<any>();
   const {
     cards,
     pairs,
@@ -24,6 +27,17 @@ export const MemoryGameScreen = () => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
+      <View style={styles.topBar}>
+        <Pressable
+          style={styles.topBarButton}
+          onPress={() => (navigation.canGoBack() ? navigation.goBack() : navigation.navigate(routes.Tabs))}
+          accessibilityRole="button"
+          accessibilityLabel="Back"
+        >
+          <Text style={styles.topBarButtonText}>Back</Text>
+        </Pressable>
+      </View>
+
       <View style={styles.header}>
         <Text style={styles.title}>Memory Game</Text>
         <View style={styles.statsRow}>
@@ -85,9 +99,25 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#0b1e61',
   },
+  topBar: {
+    paddingHorizontal: 18,
+    paddingTop: 8,
+  },
+  topBarButton: {
+    alignSelf: 'flex-start',
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+    borderRadius: 16,
+    backgroundColor: 'rgba(233, 238, 255, 0.14)',
+  },
+  topBarButtonText: {
+    color: colors.brandText,
+    fontSize: 13,
+    fontWeight: '700',
+  },
   header: {
     paddingHorizontal: 18,
-    paddingTop: 10,
+    paddingTop: 8,
   },
   title: {
     color: colors.brandText,
