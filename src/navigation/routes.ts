@@ -12,6 +12,7 @@ export const drawerRoutes = {
   BarcodeScan: 'Scan a barcode',
   FindStratoskua: 'Find Stratoskua',
   SlidingPuzzle: 'Sliding Puzzle',
+  MemoryGame: 'Memory Game',
   About: 'About',
 } as const;
 
@@ -36,6 +37,7 @@ export type RootDrawerParamList = {
   [routes.BarcodeScan]: undefined;
   [routes.FindStratoskua]: undefined;
   [routes.SlidingPuzzle]: undefined;
+  [routes.MemoryGame]: undefined;
   [routes.About]: undefined;
 };
 
