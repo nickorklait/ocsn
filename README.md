@@ -52,6 +52,19 @@ The puzzle uses a 3x3 grid with one empty tile and renders slices of
 To scale grid size in future, adjust `GRID_SIZE` in
 `src/games/slidingPuzzle/utils.ts`. The board and hook are size-driven.
 
+## Four in a Row Mini Game
+
+Four in a Row files live in:
+- `src/games/fourInARow/FourInARowScreen.tsx`
+- `src/games/fourInARow/Board.tsx`
+- `src/games/fourInARow/Cell.tsx`
+- `src/games/fourInARow/useFourInARow.ts`
+- `src/games/fourInARow/winCheck.ts`
+- `src/games/fourInARow/utils.ts`
+
+Token image selection is configured in:
+- `src/assets/stratosImages.ts` via `STRATOS_PIECES` (`p1` and `p2`).
+
 ## Crash diagnostics
 
 The app now writes the last JS error to AsyncStorage and shows a fallback UI if a
