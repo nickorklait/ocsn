@@ -65,6 +65,19 @@ Four in a Row files live in:
 Token image selection is configured in:
 - `src/assets/stratosImages.ts` via `STRATOS_PIECES` (`p1` and `p2`).
 
+## Spinning Wheel Mini Game
+
+Spinning wheel files live in:
+- `src/games/spinWheel/SpinWheelScreen.tsx`
+- `src/games/spinWheel/Wheel.tsx`
+- `src/games/spinWheel/Pointer.tsx`
+- `src/games/spinWheel/ResultModal.tsx`
+- `src/games/spinWheel/config.ts`
+- `src/games/spinWheel/utils.ts`
+
+Win chance is configured in:
+- `src/games/spinWheel/config.ts` via `WHEEL_CONFIG.winProbability`.
+
 ## Crash diagnostics
 
 The app now writes the last JS error to AsyncStorage and shows a fallback UI if a
