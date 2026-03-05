@@ -13,6 +13,7 @@ export const drawerRoutes = {
   FindStratoskua: 'Find Stratoskua',
   SlidingPuzzle: 'Sliding Puzzle',
   FourInARow: 'Four in a Row',
+  SpinWheel: 'Spin the Wheel',
   About: 'About',
 } as const;
 
@@ -38,6 +39,7 @@ export type RootDrawerParamList = {
   [routes.FindStratoskua]: undefined;
   [routes.SlidingPuzzle]: undefined;
   [routes.FourInARow]: undefined;
+  [routes.SpinWheel]: undefined;
   [routes.About]: undefined;
 };
 
