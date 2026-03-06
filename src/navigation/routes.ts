@@ -14,6 +14,7 @@ export const drawerRoutes = {
   SlidingPuzzle: 'Sliding Puzzle',
   FourInARow: 'Four in a Row',
   SpinWheel: 'Spin the Wheel',
+  TicTacToe: 'Tre på rad',
   About: 'About',
 } as const;
 
@@ -40,6 +41,7 @@ export type RootDrawerParamList = {
   [routes.SlidingPuzzle]: undefined;
   [routes.FourInARow]: undefined;
   [routes.SpinWheel]: undefined;
+  [routes.TicTacToe]: undefined;
   [routes.About]: undefined;
 };
 

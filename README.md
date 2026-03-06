@@ -78,6 +78,24 @@ Spinning wheel files live in:
 Win chance is configured in:
 - `src/games/spinWheel/config.ts` via `WHEEL_CONFIG.winProbability`.
 
+## Tic-Tac-Toe Mini Game
+
+Tic-tac-toe files live in:
+- `src/games/ticTacToe/TicTacToeScreen.tsx`
+- `src/games/ticTacToe/Board.tsx`
+- `src/games/ticTacToe/Cell.tsx`
+- `src/games/ticTacToe/useTicTacToe.ts`
+- `src/games/ticTacToe/utils.ts`
+
+Mark images are used in:
+- `src/games/ticTacToe/Cell.tsx`
+
+Current image mapping:
+- Player O: `assets/stratos/straots-bubble.png`
+- Player X: `assets/stratos/stratos-splas.png`
+
+To swap images later, update those two static `require(...)` lines in `Cell.tsx`.
+
 ## Crash diagnostics
 
 The app now writes the last JS error to AsyncStorage and shows a fallback UI if a

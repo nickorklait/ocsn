@@ -28,6 +28,7 @@ import { FindStratoskua } from '../pages/FindStratoskua';
 import { SlidingPuzzleScreen } from '../games/slidingPuzzle/SlidingPuzzleScreen';
 import { FourInARowScreen } from '../games/fourInARow/FourInARowScreen';
 import { SpinWheelScreen } from '../games/spinWheel/SpinWheelScreen';
+import { TicTacToeScreen } from '../games/ticTacToe/TicTacToeScreen';
 import { colors } from '../theme/colors';
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
@@ -144,6 +145,7 @@ export const RootNavigator = () => {
       <Drawer.Screen name={routes.SlidingPuzzle} component={SlidingPuzzleScreen} />
       <Drawer.Screen name={routes.FourInARow} component={FourInARowScreen} />
       <Drawer.Screen name={routes.SpinWheel} component={SpinWheelScreen} />
+      <Drawer.Screen name={routes.TicTacToe} component={TicTacToeScreen} />
       <Drawer.Screen name={routes.About} component={AboutScreen} />
     </Drawer.Navigator>
   );
