@@ -96,6 +96,27 @@ Current image mapping:
 
 To swap images later, update those two static `require(...)` lines in `Cell.tsx`.
 
+## Build Your Own Chocolate
+
+Build-your-own files live in:
+- `src/games/buildChocolate/BuildChocolateScreen.tsx`
+- `src/games/buildChocolate/ChocolatePreview.tsx`
+- `src/games/buildChocolate/IngredientSelector.tsx`
+- `src/games/buildChocolate/IngredientChip.tsx`
+- `src/games/buildChocolate/useChocolateBuilder.ts`
+- `src/games/buildChocolate/ingredients.ts`
+
+Ingredients are configured in:
+- `src/games/buildChocolate/ingredients.ts`
+
+To add a new topping:
+1. Add a new ingredient object in `INGREDIENTS` with `id`, `label`, and visual metadata.
+2. The selector updates automatically from `INGREDIENTS`.
+3. Add handling for any new `layer` style in `ChocolatePreview.tsx` if needed.
+
+Users can also add free-text custom toppings directly in the builder screen.
+Custom toppings are included in the preview tags and share text.
+
 ## Crash diagnostics
 
 The app now writes the last JS error to AsyncStorage and shows a fallback UI if a

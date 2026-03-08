@@ -25,6 +25,7 @@ import { UgcGalleryScreen } from '../screens/UgcGalleryScreen';
 import { UgcPostScreen } from '../screens/UgcPostScreen';
 import { BarcodeScanScreen } from '../screens/BarcodeScanScreen';
 import { FindStratoskua } from '../pages/FindStratoskua';
+import { BuildChocolateScreen } from '../games/buildChocolate/BuildChocolateScreen';
 import { SlidingPuzzleScreen } from '../games/slidingPuzzle/SlidingPuzzleScreen';
 import { FourInARowScreen } from '../games/fourInARow/FourInARowScreen';
 import { SpinWheelScreen } from '../games/spinWheel/SpinWheelScreen';
@@ -141,6 +142,11 @@ export const RootNavigator = () => {
         name={routes.FindStratoskua}
         component={FindStratoskua}
         options={{ title: 'Find Stratoskua' }}
+      />
+      <Drawer.Screen
+        name={routes.BuildChocolate}
+        component={BuildChocolateScreen}
+        options={{ title: 'Build Your Chocolate' }}
       />
       <Drawer.Screen name={routes.SlidingPuzzle} component={SlidingPuzzleScreen} />
       <Drawer.Screen name={routes.FourInARow} component={FourInARowScreen} />
