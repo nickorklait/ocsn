@@ -11,6 +11,7 @@ export const drawerRoutes = {
   UgcGallery: 'Share a Smile, Join the Herd',
   BarcodeScan: 'Scan a barcode',
   FindStratoskua: 'Find Stratoskua',
+  BuildChocolate: 'Build Your Chocolate',
   SlidingPuzzle: 'Sliding Puzzle',
   FourInARow: 'Four in a Row',
   SpinWheel: 'Spin the Wheel',
@@ -38,6 +39,7 @@ export type RootDrawerParamList = {
   [routes.UgcGallery]: undefined;
   [routes.BarcodeScan]: undefined;
   [routes.FindStratoskua]: undefined;
+  [routes.BuildChocolate]: undefined;
   [routes.SlidingPuzzle]: undefined;
   [routes.FourInARow]: undefined;
   [routes.SpinWheel]: undefined;
