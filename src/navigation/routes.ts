@@ -12,6 +12,7 @@ export const drawerRoutes = {
   BarcodeScan: 'Scan a barcode',
   FindStratoskua: 'Find Stratoskua',
   BuildChocolate: 'Build Your Chocolate',
+  StratosTrivia: 'Stratos Trivia',
   SlidingPuzzle: 'Sliding Puzzle',
   FourInARow: 'Four in a Row',
   SpinWheel: 'Spin the Wheel',
@@ -40,6 +41,7 @@ export type RootDrawerParamList = {
   [routes.BarcodeScan]: undefined;
   [routes.FindStratoskua]: undefined;
   [routes.BuildChocolate]: undefined;
+  [routes.StratosTrivia]: undefined;
   [routes.SlidingPuzzle]: undefined;
   [routes.FourInARow]: undefined;
   [routes.SpinWheel]: undefined;
