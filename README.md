@@ -117,6 +117,30 @@ To add a new topping:
 Users can also add free-text custom toppings directly in the builder screen.
 Custom toppings are included in the preview tags and share text.
 
+## Stratos Trivia
+
+Trivia files live in:
+- `src/games/trivia/TriviaScreen.tsx`
+- `src/games/trivia/TriviaStartScreen.tsx`
+- `src/games/trivia/TriviaQuestionCard.tsx`
+- `src/games/trivia/TriviaResultScreen.tsx`
+- `src/games/trivia/Leaderboard.tsx`
+- `src/games/trivia/useTriviaGame.ts`
+- `src/games/trivia/questions.ts`
+- `src/games/trivia/types.ts`
+- `src/games/trivia/scoring.ts`
+
+Questions are configured in:
+- `src/games/trivia/questions.ts`
+
+Question bank:
+- Trivia now uses a larger local bank (40 questions).
+- Each round randomly selects 10 questions from that bank.
+
+Leaderboard storage:
+- Stored locally in AsyncStorage with key `stratos_trivia_leaderboard_v1`.
+- `useTriviaGame.ts` saves and keeps the top 10 scores sorted by score/date.
+
 ## Crash diagnostics
 
 The app now writes the last JS error to AsyncStorage and shows a fallback UI if a
