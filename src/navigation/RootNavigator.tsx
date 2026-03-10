@@ -25,6 +25,7 @@ import { UgcGalleryScreen } from '../screens/UgcGalleryScreen';
 import { UgcPostScreen } from '../screens/UgcPostScreen';
 import { BarcodeScanScreen } from '../screens/BarcodeScanScreen';
 import { FindStratoskua } from '../pages/FindStratoskua';
+import { FindStratosScreen } from '../features/findStratos/FindStratosScreen';
 import { BuildChocolateScreen } from '../games/buildChocolate/BuildChocolateScreen';
 import { TriviaScreen } from '../games/trivia/TriviaScreen';
 import { SlidingPuzzleScreen } from '../games/slidingPuzzle/SlidingPuzzleScreen';
@@ -143,6 +144,11 @@ export const RootNavigator = () => {
         name={routes.FindStratoskua}
         component={FindStratoskua}
         options={{ title: 'Find Stratoskua' }}
+      />
+      <Drawer.Screen
+        name={routes.FindStratosNearMe}
+        component={FindStratosScreen}
+        options={{ title: 'Find Stratos Near Me' }}
       />
       <Drawer.Screen
         name={routes.BuildChocolate}
