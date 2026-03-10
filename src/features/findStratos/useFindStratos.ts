@@ -3,8 +3,13 @@ import { Platform } from 'react-native';
 import * as Location from 'expo-location';
 import { getBulkPriceStoresByEans, getNearbyStores, searchStratosProducts, setKassalApiToken } from './kassalApi';
 import { BulkPriceItem, FindStratosStore, NearbyProduct, Product, Store } from './types';
+import { reportError } from '../../utils/errorReporting';
 
 const CACHE_TTL_MS = 2 * 60 * 1000;
+const FALLBACK_COORDS = {
+  latitude: 59.9139,
+  longitude: 10.7522,
+};
 
 type CacheEntry = {
   key: string;
@@ -16,6 +21,10 @@ type CacheEntry = {
 type Coordinates = {
   latitude: number;
   longitude: number;
+};
+
+type CoordinatesResult = Coordinates & {
+  usedFallback: boolean;
 };
 
 let latestCache: CacheEntry | null = null;
@@ -337,7 +346,14 @@ const buildProductPreviewMaps = (products: Product[]) => {
   return { byStoreKey, nearbyProducts };
 };
 
-const getCoordinates = async () => {
+const getCoordinates = async (): Promise<CoordinatesResult> => {
+  if (Platform.OS === 'ios') {
+    return {
+      ...FALLBACK_COORDS,
+      usedFallback: true,
+    };
+  }
+
   try {
     const permission = await Location.requestForegroundPermissionsAsync();
     if (permission.status !== 'granted') {
@@ -349,6 +365,7 @@ const getCoordinates = async () => {
     return {
       latitude: position.coords.latitude,
       longitude: position.coords.longitude,
+      usedFallback: false,
     };
   } catch (error) {
     const message = error instanceof Error ? error.message : '';
@@ -382,6 +399,7 @@ export const useFindStratos = () => {
   const [nearbyProducts, setNearbyProducts] = useState<NearbyProduct[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [locationNotice, setLocationNotice] = useState<string | null>(null);
   const [lastUpdated, setLastUpdated] = useState<number | null>(null);
 
   const fetchNearby = useCallback(async () => {
@@ -390,6 +408,17 @@ export const useFindStratos = () => {
 
     try {
       const coords = await getCoordinates();
+      // eslint-disable-next-line no-console
+      console.info('[FindStratos] fetchNearby start', {
+        latitude: Number(coords.latitude.toFixed(4)),
+        longitude: Number(coords.longitude.toFixed(4)),
+        usedFallback: coords.usedFallback,
+      });
+      setLocationNotice(
+        coords.usedFallback
+          ? 'Using fallback area (Oslo) to keep this build stable on iPhone. Pull to refresh will use the same area.'
+          : null
+      );
       const cacheKey = `${coords.latitude.toFixed(2)}:${coords.longitude.toFixed(2)}`;
       const now = Date.now();
 
@@ -438,7 +467,14 @@ export const useFindStratos = () => {
       setStores(merged);
       setNearbyProducts(nearbyProductsFromProducts);
       setLastUpdated(now);
+      // eslint-disable-next-line no-console
+      console.info('[FindStratos] fetchNearby success', {
+        stores: merged.length,
+        products: products.length,
+        bulkPriceRows: bulkPriceRows.length,
+      });
     } catch (caughtError) {
+      void reportError(caughtError, 'findStratos:fetchNearby');
       setError(toFriendlyError(caughtError));
     } finally {
       setLoading(false);
@@ -460,6 +496,8 @@ export const useFindStratos = () => {
         return false;
       }
       setKassalApiToken(trimmed);
+      // eslint-disable-next-line no-console
+      console.info('[FindStratos] runtime API key set');
       await fetchNearby();
       return true;
     },
@@ -473,6 +511,7 @@ export const useFindStratos = () => {
     error,
     needsApiKey,
     empty,
+    locationNotice,
     lastUpdated,
     refresh: fetchNearby,
     submitApiKey,

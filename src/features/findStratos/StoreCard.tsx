@@ -2,11 +2,14 @@ import React from 'react';
 import { Image, Linking, Pressable, StyleSheet, Text, View } from 'react-native';
 import { FindStratosStore } from './types';
 import { colors } from '../../theme/colors';
+import { reportError } from '../../utils/errorReporting';
 
 interface StoreCardProps {
   store: FindStratosStore;
   isBestDeal?: boolean;
 }
+
+const loggedImageErrors = new Set<string>();
 
 const formatDistance = (distanceKm?: number | null) =>
   distanceKm === null || distanceKm === undefined ? 'Distance unavailable' : `${distanceKm.toFixed(1)} km`;
@@ -19,10 +22,22 @@ export const StoreCard = ({ store, isBestDeal = false }: StoreCardProps) => {
     if (!store.website) {
       return;
     }
-    const canOpen = await Linking.canOpenURL(store.website);
-    if (canOpen) {
-      await Linking.openURL(store.website);
+    try {
+      const canOpen = await Linking.canOpenURL(store.website);
+      if (canOpen) {
+        await Linking.openURL(store.website);
+      }
+    } catch (error) {
+      void reportError(error, 'findStratos:openWebsite');
     }
+  };
+
+  const handleImageError = (uri: string | undefined) => {
+    if (!uri || loggedImageErrors.has(uri)) {
+      return;
+    }
+    loggedImageErrors.add(uri);
+    void reportError(new Error(`Image failed to load: ${uri}`), 'findStratos:image');
   };
 
   return (
@@ -47,7 +62,12 @@ export const StoreCard = ({ store, isBestDeal = false }: StoreCardProps) => {
 
       {store.matchedProduct ? (
         <View style={styles.productPreviewRow}>
-          <Image source={{ uri: store.matchedProduct.imageUrl }} style={styles.productImage} resizeMode="cover" />
+          <Image
+            source={{ uri: store.matchedProduct.imageUrl }}
+            style={styles.productImage}
+            resizeMode="cover"
+            onError={() => handleImageError(store.matchedProduct?.imageUrl)}
+          />
           <View style={styles.productMeta}>
             <Text style={styles.productLabel}>Likely available here</Text>
             <Text style={styles.productName} numberOfLines={2}>
@@ -62,7 +82,14 @@ export const StoreCard = ({ store, isBestDeal = false }: StoreCardProps) => {
           <Text style={styles.storeName}>{store.name}</Text>
           <Text style={styles.chainName}>{store.chainName}</Text>
         </View>
-        {store.logo ? <Image source={{ uri: store.logo }} style={styles.logo} resizeMode="contain" /> : null}
+        {store.logo ? (
+          <Image
+            source={{ uri: store.logo }}
+            style={styles.logo}
+            resizeMode="contain"
+            onError={() => handleImageError(store.logo || undefined)}
+          />
+        ) : null}
       </View>
 
       <Text style={styles.metaText}>{formatDistance(store.distanceKm)}</Text>

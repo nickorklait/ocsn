@@ -5,6 +5,7 @@ import { routes } from '../../navigation/routes';
 import { colors } from '../../theme/colors';
 import { StoreCard } from './StoreCard';
 import { useFindStratos } from './useFindStratos';
+import { reportError } from '../../utils/errorReporting';
 
 const formatUpdatedTime = (value: number | null) => {
   if (!value) {
@@ -15,11 +16,20 @@ const formatUpdatedTime = (value: number | null) => {
 
 export const FindStratosScreen = () => {
   const navigation = useNavigation<any>();
-  const { stores, nearbyProducts, loading, error, needsApiKey, empty, lastUpdated, refresh, submitApiKey } = useFindStratos();
+  const { stores, nearbyProducts, loading, error, needsApiKey, empty, locationNotice, lastUpdated, refresh, submitApiKey } = useFindStratos();
   const [apiKeyInput, setApiKeyInput] = React.useState('');
   const [openNowOnly, setOpenNowOnly] = React.useState(false);
   const [withPriceOnly, setWithPriceOnly] = React.useState(false);
   const [selectedChainCode, setSelectedChainCode] = React.useState<string | null>(null);
+  const loggedTileImageErrors = React.useRef<Set<string>>(new Set());
+
+  const handleTileImageError = React.useCallback((uri: string) => {
+    if (loggedTileImageErrors.current.has(uri)) {
+      return;
+    }
+    loggedTileImageErrors.current.add(uri);
+    void reportError(new Error(`Product tile image failed to load: ${uri}`), 'findStratos:tileImage');
+  }, []);
 
   const chainOptions = React.useMemo(() => {
     const map = new Map<string, string>();
@@ -95,6 +105,12 @@ export const FindStratosScreen = () => {
         </Pressable>
       </View>
 
+      {locationNotice ? (
+        <View style={styles.noticeCard}>
+          <Text style={styles.noticeText}>{locationNotice}</Text>
+        </View>
+      ) : null}
+
       <ScrollView contentContainerStyle={styles.listWrap}>
         {!error ? (
           <View style={styles.filtersRow}>
@@ -151,7 +167,12 @@ export const FindStratosScreen = () => {
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
               {nearbyProducts.map((product) => (
                 <View key={product.id} style={styles.productTile}>
-                  <Image source={{ uri: product.imageUrl }} style={styles.productTileImage} resizeMode="cover" />
+                  <Image
+                    source={{ uri: product.imageUrl }}
+                    style={styles.productTileImage}
+                    resizeMode="cover"
+                    onError={() => handleTileImageError(product.imageUrl)}
+                  />
                   <Text style={styles.productTileName} numberOfLines={2}>
                     {product.name}
                   </Text>
@@ -262,6 +283,21 @@ const styles = StyleSheet.create({
     color: colors.brandText,
     fontSize: 12,
     fontWeight: '700',
+  },
+  noticeCard: {
+    marginTop: 8,
+    marginHorizontal: 18,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 199, 95, 0.5)',
+    backgroundColor: 'rgba(255, 199, 95, 0.12)',
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+  },
+  noticeText: {
+    color: colors.brandText,
+    fontSize: 12,
+    lineHeight: 17,
   },
   listWrap: {
     paddingHorizontal: 18,

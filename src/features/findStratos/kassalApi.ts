@@ -1,5 +1,6 @@
 import { Platform } from 'react-native';
 import { BulkPriceItem, KassalApiListResponse, Product, Store } from './types';
+import { reportError } from '../../utils/errorReporting';
 
 const KASSAL_BASE_URL = 'https://kassal.app/api/v1';
 const DEFAULT_STORE_RADIUS_KM = 10;
@@ -76,6 +77,7 @@ const buildUrl = (path: string, params: Record<string, string | number | boolean
 const fetchKassalJson = async <T,>(url: string): Promise<T> => {
   const token = getApiToken();
   if (!token) {
+    void reportError(new Error('Missing Kassal API token at request time'), 'findStratos:token');
     throw new Error(
       'Missing API key. Set EXPO_PUBLIC_KASSALAPP_API_TOKEN in env. On web dev you can run localStorage.setItem("EXPO_PUBLIC_KASSALAPP_API_TOKEN","<token>") and reload.'
     );
@@ -105,7 +107,9 @@ const fetchKassalJson = async <T,>(url: string): Promise<T> => {
     } catch {
       // Ignore parse failures and keep generic status message.
     }
-    throw new Error(`Kassal API request failed (${response.status}).${details ? ` ${details}` : ''}`);
+    const apiError = new Error(`Kassal API request failed (${response.status}).${details ? ` ${details}` : ''}`);
+    void reportError(apiError, `findStratos:api:${response.status}`);
+    throw apiError;
   }
 
   return (await response.json()) as T;
