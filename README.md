@@ -141,6 +141,23 @@ Leaderboard storage:
 - Stored locally in AsyncStorage with key `stratos_trivia_leaderboard_v1`.
 - `useTriviaGame.ts` saves and keeps the top 10 scores sorted by score/date.
 
+## Find Stratos Near Me
+
+Find Stratos files live in:
+- `src/features/findStratos/FindStratosScreen.tsx`
+- `src/features/findStratos/StoreCard.tsx`
+- `src/features/findStratos/useFindStratos.ts`
+- `src/features/findStratos/kassalApi.ts`
+- `src/features/findStratos/types.ts`
+
+API endpoints used:
+- `GET /products` (search for Stratos products)
+- `GET /physical-stores` (nearby stores by coordinates)
+
+API key configuration:
+- Set `EXPO_PUBLIC_KASSALAPP_API_TOKEN` in your Expo environment before running.
+- The app reads this token at runtime and sends it as `Authorization: Bearer <token>`.
+
 ## Crash diagnostics
 
 The app now writes the last JS error to AsyncStorage and shows a fallback UI if a

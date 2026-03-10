@@ -11,6 +11,7 @@ export const drawerRoutes = {
   UgcGallery: 'Share a Smile, Join the Herd',
   BarcodeScan: 'Scan a barcode',
   FindStratoskua: 'Find Stratoskua',
+  FindStratosNearMe: 'Find Stratos Near Me',
   BuildChocolate: 'Build Your Chocolate',
   StratosTrivia: 'Stratos Trivia',
   SlidingPuzzle: 'Sliding Puzzle',
@@ -40,6 +41,7 @@ export type RootDrawerParamList = {
   [routes.UgcGallery]: undefined;
   [routes.BarcodeScan]: undefined;
   [routes.FindStratoskua]: undefined;
+  [routes.FindStratosNearMe]: undefined;
   [routes.BuildChocolate]: undefined;
   [routes.StratosTrivia]: undefined;
   [routes.SlidingPuzzle]: undefined;
